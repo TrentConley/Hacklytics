@@ -43,7 +43,13 @@ const storageRef = ref(storage, new Date().toISOString());
 type Image = {
   imageFile: Blob;
 };
-const ImageUploaderWrapper = ({ category }: { category: string }) => {
+const ImageUploaderWrapper = ({
+  category,
+  onImageUpload,
+}: {
+  category: string;
+  onImageUpload: (imageData: { imageUrl: string; category: string }) => void;
+}) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -82,6 +88,8 @@ const ImageUploaderWrapper = ({ category }: { category: string }) => {
             setImageUrl(downloadURL);
             setLoading(false);
             setSuccess(true);
+            // Return the imageUrl and category when an image is uploaded successfully
+            onImageUpload({ imageUrl: downloadURL, category });
           });
         }
       );
@@ -92,7 +100,7 @@ const ImageUploaderWrapper = ({ category }: { category: string }) => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-5">
       <h2 className="text-center">{category}</h2>
       <ImageUploader
         getRootProps={getRootProps}
@@ -111,6 +119,35 @@ const ImageUploaderWrapper = ({ category }: { category: string }) => {
 const Home: NextPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [newCategory, setNewCategory] = useState<string>("");
+  const [imageData, setImageData] = useState<
+    Array<{ imageUrl: string; category: string }>
+  >([]);
+  const handleImageUpload = (imageData: {
+    imageUrl: string;
+    category: string;
+  }) => {
+    setImageData((prevImageData) => [...prevImageData, imageData]);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log("foobar");
+      console.log(JSON.stringify(imageData));
+      const response = await fetch("YOUR_SERVER_URL", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(imageData),
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+      }
+    } catch (error) {
+      console.error("Submit failed:", error);
+    }
+  };
 
   const addCategory = () => {
     setCategories([...categories, newCategory]);
@@ -138,10 +175,26 @@ const Home: NextPage = () => {
             Add Category
           </button>
         </div>
-
-        {categories.map((category, index) => (
-          <ImageUploaderWrapper key={index} category={category} />
-        ))}
+        <div className="grid">
+          {" "}
+          {/* Reduced horizontal gap */}
+          {categories.map((category, index) => (
+            <div key={index} className="">
+              {" "}
+              {/* Adjusted height and overflow */}
+              <ImageUploaderWrapper
+                category={category}
+                onImageUpload={handleImageUpload}
+              />
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={handleSubmit}
+          className="bg-blue-500 text-white rounded-md p-2 flex justify-center  "
+        >
+          Submit
+        </button>
         <footer className="bottom-0 my-3">
           <div className="flex w-full justify-center mb-0">
             <p className="text-center tracking-tight">
