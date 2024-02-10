@@ -25,24 +25,15 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="main_container">
+    <div className="">
       {!success && (
         <div
-          className={` ${loading ? "hidden" : ""} flex justify-center mt-10`}
+          className={` ${loading ? "hidden" : ""} flex justify-center w-full`}
         >
           <div className="dropzone">
-            <p className="font-bold">Upload your image</p>
-            <p>File should be jpeg, png...</p>
             <div {...getRootProps()} className="drag_drop_wrapper">
               <input hidden {...getInputProps()} />
-              <PhotographIcon className="w-16 h-16 text-blue-200" />
-              {isDragActive ? (
-                <p>Drop the photo here...</p>
-              ) : (
-                <p>Drag & Drop your image here</p>
-              )}
             </div>
-            <p>Or</p>
             <div className="flex w-full justify-center">
               <button onClick={open} className="dropzone_button">
                 Choose a file
