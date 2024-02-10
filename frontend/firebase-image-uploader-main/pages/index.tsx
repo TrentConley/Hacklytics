@@ -43,18 +43,14 @@ const storageRef = ref(storage, new Date().toISOString());
 type Image = {
   imageFile: Blob;
 };
-
-const Home: NextPage = () => {
-  let [progress, setProgress] = useState<number>(0);
-
-  const [imageUrl, setImageUrl] = useState<string>("");
-
+const ImageUploaderWrapper = ({ category }) => {
   const [loading, setLoading] = useState(false);
-
   const [success, setSuccess] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
+  const storageRef = ref(storage, new Date().toISOString());
 
   const onDrop = useCallback((acceptedFiles) => {
-    // Upload files to storage
     const file = acceptedFiles[0];
     uploadImage({ imageFile: file });
   }, []);
@@ -66,30 +62,6 @@ const Home: NextPage = () => {
     noKeyboard: true,
     onDrop,
   });
-
-  //Using Cloudinary
-  // sample comment
-
-  // const uploadImage = async ({ imageFile }: Image) => {
-  //   setLoading(false);
-  //   const uploadURL = process.env.NEXT_PUBLIC_UPLOAD_URL as string;
-  //   const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
-  //   const formData = new FormData();
-  //   try {
-  //     formData.append("file", imageFile);
-  //     formData.append("upload_preset", uploadPreset);
-  //     const response = await axios.post(uploadURL, formData, {
-  //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     });
-  //     console.log(response.data);
-  //     setLoading(false);
-  //   } catch (e: any) {
-  //     console.log(e.message);
-  //     setLoading(false);
-  //   }
-  // };
-
-  // Firebase Storage
 
   const uploadImage = async ({ imageFile }: Image) => {
     try {
@@ -120,22 +92,56 @@ const Home: NextPage = () => {
   };
 
   return (
+    <div className="mt-10">
+      <h2 className="text-center">{category}</h2>
+      <ImageUploader
+        getRootProps={getRootProps}
+        getInputProps={getInputProps}
+        isDragActive={isDragActive}
+        open={open}
+        loading={loading}
+        success={success}
+        progress={progress}
+        imageUrl={imageUrl}
+      />
+    </div>
+  );
+};
+
+const Home: NextPage = () => {
+  const [categories, setCategories] = useState<string[]>([]);
+  const [newCategory, setNewCategory] = useState<string>("");
+
+  const addCategory = () => {
+    setCategories([...categories, newCategory]);
+    setNewCategory("");
+  };
+
+  return (
     <>
       <div>
         <Head>
           <title>Image Uploader</title>
         </Head>
-        <ImageUploader
-          getRootProps={getRootProps}
-          getInputProps={getInputProps}
-          isDragActive={isDragActive}
-          open={open}
-          loading={loading}
-          success={success}
-          progress={progress}
-          imageUrl={imageUrl}
-        />
+        <div className="flex justify-center mt-10">
+          <input
+            type="text"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            placeholder="Enter new category"
+            className="border-2 border-gray-300 rounded-md p-2 mr-2"
+          />
+          <button
+            onClick={addCategory}
+            className="bg-blue-500 text-white rounded-md p-2"
+          >
+            Add Category
+          </button>
+        </div>
 
+        {categories.map((category, index) => (
+          <ImageUploaderWrapper key={index} category={category} />
+        ))}
         <footer className="bottom-0 my-3">
           <div className="flex w-full justify-center mb-0">
             <p className="text-center tracking-tight">
