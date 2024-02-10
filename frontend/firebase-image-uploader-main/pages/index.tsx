@@ -6,6 +6,8 @@ import { PhotographIcon } from "@heroicons/react/solid";
 import { useDropzone } from "react-dropzone";
 // import axios from "axios";
 import initFirebase from "@/lib/firebaseInit";
+import ImageUploader from "@/components/ImageUploader";
+
 import {
   getStorage,
   ref,
@@ -119,39 +121,20 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Image Uploader</title>
-      </Head>
-      <div className="main_container">
-        {!success && (
-          <div
-            className={` ${loading ? "hidden" : ""} flex justify-center mt-10`}
-          >
-            <div className="dropzone">
-              <p className="font-bold">Upload your image</p>
-              <p>File should be jpeg, png...</p>
-              <div {...getRootProps()} className="drag_drop_wrapper">
-                <input hidden {...getInputProps()} />
-                <PhotographIcon className="w-16 h-16 text-blue-200" />
-                {isDragActive ? (
-                  <p>Drop the photo here...</p>
-                ) : (
-                  <p>Drag & Drop your image here</p>
-                )}
-              </div>
-              <p>Or</p>
-              <div className="flex w-full justify-center">
-                <button onClick={open} className="dropzone_button">
-                  Choose a file
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {loading && <UploadProgress progress={progress} />}
-
-        {success && <UploadPreview imageUrl={imageUrl} />}
+      <div>
+        <Head>
+          <title>Image Uploader</title>
+        </Head>
+        <ImageUploader
+          getRootProps={getRootProps}
+          getInputProps={getInputProps}
+          isDragActive={isDragActive}
+          open={open}
+          loading={loading}
+          success={success}
+          progress={progress}
+          imageUrl={imageUrl}
+        />
 
         <footer className="bottom-0 my-3">
           <div className="flex w-full justify-center mb-0">
