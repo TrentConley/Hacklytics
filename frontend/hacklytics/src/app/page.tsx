@@ -1,10 +1,12 @@
 import Image from "next/image";
-import ImageUpload from "../components/image-upload";
+import ChooseCategories from "../components/choose-categories";
+import { UploadImages } from "@/components/upload-images";
 
 export default function Home() {
   return (
     <div>
-      <ImageUpload />
+      <ChooseCategories />
+      <UploadImages />
     </div>
   );
 }
