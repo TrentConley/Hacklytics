@@ -43,7 +43,7 @@ const storageRef = ref(storage, new Date().toISOString());
 type Image = {
   imageFile: Blob;
 };
-const ImageUploaderWrapper = ({ category }) => {
+const ImageUploaderWrapper = ({ category }: { category: string }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
