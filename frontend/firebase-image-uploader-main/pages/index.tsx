@@ -119,6 +119,7 @@ const ImageUploaderWrapper = ({
 
 const Home: NextPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
+  const [modelName, setModelName] = useState<string>("");
   const [newCategory, setNewCategory] = useState<string>("");
   const [imageData, setImageData] = useState<
     Array<{ imageUrl: string; category: string }>
@@ -134,7 +135,7 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify(imageData));
-      const response = await fetch("http://18.188.69.104:8080/upload/1", {
+      const response = await fetch(`http://18.188.69.104:8080/upload/${modelName}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -161,6 +162,13 @@ const Home: NextPage = () => {
         <Head>
           <title>Image Uploader</title>
         </Head>
+        <div className="flex justify-center mt-10">
+          <input type="text"
+            value={modelName}
+            onChange={(e) => setModelName(e.target.value)}
+            placeholder="Enter model name"
+            className="border-2 border-gray-300 rounded-md p-2 mr-2" />
+        </div>
         <div className="flex justify-center mt-10">
           <input
             type="text"
