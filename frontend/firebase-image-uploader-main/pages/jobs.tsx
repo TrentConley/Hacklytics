@@ -42,7 +42,9 @@ const Classifier: FC = () => {
     noKeyboard: true,
     onDrop,
   });
-
+  const [buttonModelMap, setButtonModelMap] = useState<{ [key: string]: any }>(
+    {}
+  );
   const uploadImage = async ({ imageFile }: { imageFile: Blob }) => {
     try {
       setLoading(true);
@@ -68,16 +70,6 @@ const Classifier: FC = () => {
 
         // after upload image, then call post to your sever with model name and image url
       );
-      const response = await fetch(
-        `http://18.188.69.104:5000/upload/${selectedButton}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(imageUrl),
-        }
-      );
     } catch (e: any) {
       console.log(e.message);
       setLoading(false);
@@ -88,7 +80,25 @@ const Classifier: FC = () => {
     const fetchButtonNames = async () => {
       try {
         const response = await axios.get("http://18.188.69.104:5000/getModels");
-        setButtonNames(response.data);
+        const modelID = (response.data as Array<Array<any>>).map(
+          (item) => item[0]
+        );
+
+        const buttonNames = (response.data as Array<Array<any>>).map(
+          (item) => item[1]
+        );
+
+        const newButtonModelMap: { [key: string]: any } = {};
+        for (let i = 0; i < buttonNames.length; i++) {
+          newButtonModelMap[buttonNames[i]] = modelID[i];
+        }
+
+        setButtonModelMap(newButtonModelMap);
+
+        setButtonNames(buttonNames);
+
+        console.log(response.data[0][1]);
+        // setButtonNames(response.data);
         console.log(`got names`);
         console.log(response);
       } catch (error) {
@@ -98,6 +108,23 @@ const Classifier: FC = () => {
 
     fetchButtonNames();
   }, []);
+
+  const submitImage = async () => {
+    const model =
+      buttonModelMap[buttonNames[selectedButton ? selectedButton : 0]];
+    console.log(model);
+    const response = await fetch(`http://18.188.69.104:5000/classify`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imageUrl,
+        model,
+      }),
+    });
+    // handle the response here
+  };
 
   return (
     <div>
@@ -118,6 +145,7 @@ const Classifier: FC = () => {
           )}
         </div>
       ))}
+      <button onClick={submitImage}>Submit</button>
     </div>
   );
 };
