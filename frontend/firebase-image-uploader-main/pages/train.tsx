@@ -173,47 +173,81 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          backgroundImage: `url(/village.png)`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          height: "100vh",
+        }}
+      >
         <Header />
-        <Head>
-          <title>Image Uploader</title>
-        </Head>
-        <div className="flex justify-center mt-10">
-          <input
-            type="text"
-            value={modelName}
-            onChange={(e) => setModelName(e.target.value)}
-            placeholder="Enter model name"
-            className="border-2 border-gray-300 rounded-md p-2 mr-2"
-          />
+        <div className="flex flex-col items-center justify-center h-screen">
+          <div className="text-center py-5 text-gray-200">
+            <h1 className="text-4xl ">Enter model name</h1>
+          </div>
+          <div className="flex justify-center mt-10 text-center text-white">
+            <textarea
+              value={modelName}
+              onChange={(e) => setModelName(e.target.value)}
+              placeholder="Model"
+              className="border-none border-b-2 border-gray-300 bg-transparent outline-none text-center text-5xl"
+              style={{
+                caretColor: "#ADD8E6",
+                color: "#ADD8E6",
+                textDecoration: "underline",
+                textDecorationThickness: "1px",
+                textUnderlineOffset: "0.2em",
+              }}
+              rows={5}
+            />
+          </div>
         </div>
-        <div className="flex justify-center">
-          <h2>Settings: </h2>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="CNN"
-                checked={settings.modelType == "CNN"}
-                onChange={(e) =>
-                  setSettings({ ...settings, modelType: e.target.value })
-                }
-              />
-              CNN (Speed)
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="VIT"
-                checked={settings.modelType == "VIT"}
-                onChange={(e) =>
-                  setSettings({ ...settings, modelType: e.target.value })
-                }
-              />
-              VIT (Accuracy)
-            </label>
+        <div className="flex justify-center flex-col items-center">
+          <h2 className="text-3xl mb-10 mt-10">Settings: </h2>
+          <div className="flex">
+            <div>
+              <button
+                className={`p-4 m-2 rounded-lg ${
+                  settings.modelType === "CNN" ? "border-4 border-blue-500" : ""
+                }`}
+                onClick={() => setSettings({ ...settings, modelType: "CNN" })}
+                style={{
+                  position: "relative",
+                  width: "300px",
+                  height: "300px",
+                }}
+              >
+                <Image
+                  src="/rabbit.png"
+                  layout="fill"
+                  objectFit="cover"
+                  alt="CNN"
+                />
+              </button>
+              <h2 className="text-center">Speed</h2>
+            </div>
+            <div>
+              <button
+                className={`p-4 m-2 rounded-lg ${
+                  settings.modelType === "VIT" ? "border-4 border-blue-500" : ""
+                }`}
+                onClick={() => setSettings({ ...settings, modelType: "VIT" })}
+                style={{
+                  position: "relative",
+                  width: "300px",
+                  height: "300px",
+                }}
+              >
+                <Image
+                  src="/brain.png"
+                  layout="fill"
+                  objectFit="cover"
+                  alt="VIT"
+                />
+              </button>
+              <h2 className="text-center">Accuracy</h2>
+            </div>
           </div>
         </div>
         <div className="flex justify-center mt-10">
@@ -245,12 +279,14 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white rounded-md p-2 flex justify-center  "
-        >
-          Submit
-        </button>
+        <div className="flex justify-center py-20">
+          <button
+            onClick={handleSubmit}
+            className=" text-gray-700 bg-green-100 text-7xl rounded-md p-2"
+          >
+            Train model
+          </button>
+        </div>
         <footer className="bottom-0 my-3">
           <div className="flex w-full justify-center mb-0">
             <p className="text-center tracking-tight">
