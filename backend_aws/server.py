@@ -23,8 +23,9 @@ def debug():
 def upload(modelName):
     print('recieved input')
     modelID = str(uuid.uuid1())
+    data = request.json()
+    imageData = data["imageData"]
     models[modelID] = [modelName, 0]
-    data = request.json
     modelQueue.append({"id": modelID, "data":data})
     return "", 201
 
