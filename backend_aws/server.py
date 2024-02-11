@@ -21,6 +21,7 @@ def debug():
 
 @app.route("/upload/<modelName>", methods=["POST"])
 def upload(modelName):
+    print('recieved input')
     modelID = str(uuid.uuid1())
     models[modelID] = [modelName, 0]
     data = request.json
@@ -46,7 +47,7 @@ def finishModels():
 
 @app.route("/getModels", methods=["GET"])
 def getModels():
-    items = [(a, b, c) for a, (b, c) in list(models.items())]
+    items = [b for a, (b, c) in list(models.items())]
     return jsonify(items), 200
 
 @app.route("/classify", methods=["POST"])

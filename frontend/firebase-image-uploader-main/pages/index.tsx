@@ -142,7 +142,7 @@ const Home: NextPage = () => {
         },
         body: JSON.stringify(imageData),
       });
-
+      console.log(response);
       if (!response.ok) {
         throw new Error("HTTP error " + response.status);
       }
