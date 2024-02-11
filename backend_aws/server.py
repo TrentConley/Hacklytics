@@ -36,6 +36,8 @@ def checkModels():
 @app.route("/finishModel", methods=["POST"])
 def finishModels():
     data = request.json
+    if (data["id"] == "refused"):
+        return "", 400
     if (data["id"] in models):
         models[data["id"]][1] = 1
         return "", 202
