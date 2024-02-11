@@ -134,7 +134,7 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify(imageData));
-      const response = await fetch("http://18.188.69.104:8080/", {
+      const response = await fetch("http://18.188.69.104:8080/upload/1", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
