@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC, useCallback } from "react";
 import axios from "axios";
 import ImageUploader from "@/components/ImageUploader";
 import { useDropzone } from "react-dropzone";
+import Header from "@/components/header";
 import {
   getStorage,
   ref,
@@ -24,7 +25,9 @@ const storage = getStorage(app);
 
 const Classifier: FC = () => {
   const [buttonNames, setButtonNames] = useState<string[]>([]);
-  const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const [selectedButton, setSelectedButton] = useState<number | undefined>(
+    undefined
+  );
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -123,15 +126,40 @@ const Classifier: FC = () => {
         model,
       }),
     });
-    // handle the response here
+    console.log(response);
   };
 
   return (
     <div>
-      {buttonNames.map((name, index) => (
-        <div key={index} style={{ display: "flex", alignItems: "center" }}>
-          <button onClick={() => setSelectedButton(index)}>{name}</button>
-          {selectedButton === index && (
+      <Header />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+        }}
+      >
+        <select
+          value={selectedButton}
+          onChange={(e) => setSelectedButton(Number(e.target.value))}
+          style={{
+            fontSize: "2em", // Increase the text size
+            height: "2em",
+            width: "20%",
+            marginBottom: "1em", // Add padding to the bottom
+            backgroundColor: "#E8E8E8",
+          }}
+        >
+          {buttonNames.map((name, index) => (
+            <option key={index} value={index}>
+              {name}
+            </option>
+          ))}
+        </select>
+        {selectedButton !== null && (
+          <div style={{ width: "50%", height: "50%" }}>
             <ImageUploader
               getRootProps={getRootProps}
               getInputProps={getInputProps}
@@ -142,12 +170,10 @@ const Classifier: FC = () => {
               progress={progress}
               imageUrl={imageUrl}
             />
-          )}
-        </div>
-      ))}
-      <button onClick={submitImage}>Submit</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
-
 export default Classifier;
