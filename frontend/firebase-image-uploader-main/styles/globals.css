@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Inter&family=Source+Sans+Pro&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 html,
 body {
   padding: 0;
@@ -21,6 +21,12 @@ a {
   box-sizing: border-box;
 }
 
+.fancy-font {
+  font-family: "Dancing Script", cursive;
+}
+.inline {
+  display: inline;
+}
 .main_container {
   @apply flex flex-col w-full bg-gray-100 min-h-screen justify-between p-6;
 }
