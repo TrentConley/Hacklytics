@@ -141,7 +141,7 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify({imageData, settings}))
-      const response = await fetch(`http://18.188.69.104:8080/upload/${modelName}`, {
+      const response = await fetch(`http://18.188.69.104:5000/upload/${modelName}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -174,11 +174,63 @@ const Home: NextPage = () => {
           <title>Image Uploader</title>
         </Head>
         <div className="flex justify-center mt-10">
-          <input type="text"
+          <input
+            type="text"
             value={modelName}
             onChange={(e) => setModelName(e.target.value)}
             placeholder="Enter model name"
-            className="border-2 border-gray-300 rounded-md p-2 mr-2" />
+            className="border-2 border-gray-300 rounded-md p-2 mr-2"
+          />
+        </div>
+        <div className="flex justify-center">
+          <h2>Settings:   </h2>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="modelType"
+                value="CNN"
+                checked={settings.modelType == 'CNN'}
+                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
+              />
+              CNN (Speed)
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="modelType"
+                value="VIT"
+                checked={settings.modelType == 'VIT'}
+                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
+              />
+              VIT (Accuracy)
+            </label>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <h2>Settings:   </h2>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="modelType"
+                value="CNN"
+                checked={settings.modelType == 'CNN'}
+                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
+              />
+              CNN (Speed)
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="modelType"
+                value="VIT"
+                checked={settings.modelType == 'VIT'}
+                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
+              />
+              VIT (Accuracy)
+            </label>
+          </div>
         </div>
         <div className="flex justify-center">
           <h2>Settings:   </h2>

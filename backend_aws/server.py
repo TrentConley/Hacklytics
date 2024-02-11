@@ -47,7 +47,7 @@ def finishModels():
 
 @app.route("/getModels", methods=["GET"])
 def getModels():
-    items = [b for a, (b, c) in list(models.items())]
+    items = [(a, b) for a, (b, c) in list(models.items())]
     return jsonify(items), 200
 
 @app.route("/classify", methods=["POST"])
@@ -76,4 +76,5 @@ def finishJob():
         return "", 400
 
 if __name__ == '__main__':
+    
     app.run(host= '0.0.0.0',debug=True)
