@@ -173,6 +173,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Header />
       <div
         style={{
           backgroundImage: `url(/village.png)`,
@@ -181,7 +182,6 @@ const Home: NextPage = () => {
           height: "100vh",
         }}
       >
-        <Header />
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="text-center py-5 text-gray-200">
             <h1 className="text-4xl ">Enter model name</h1>

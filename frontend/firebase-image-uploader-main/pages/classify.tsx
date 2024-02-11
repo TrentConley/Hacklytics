@@ -130,7 +130,14 @@ const Classifier: FC = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/robotichand.png)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <Header />
       <div
         style={{
@@ -159,7 +166,7 @@ const Classifier: FC = () => {
           ))}
         </select>
         {selectedButton !== null && (
-          <div style={{ width: "50%", height: "50%" }}>
+          <div style={{ width: "50%", height: "75%", marginBottom: "1em" }}>
             <ImageUploader
               getRootProps={getRootProps}
               getInputProps={getInputProps}
@@ -172,6 +179,22 @@ const Classifier: FC = () => {
             />
           </div>
         )}
+        <button
+          onClick={submitImage}
+          style={{
+            background: "black",
+            color: "gold",
+            border: "1px solid",
+            backgroundImage: "linear-gradient(to right, gold, black)",
+            padding: "10px 20px",
+            fontSize: "1em",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginTop: "1em",
+          }}
+        >
+          Submit Image
+        </button>
       </div>
     </div>
   );

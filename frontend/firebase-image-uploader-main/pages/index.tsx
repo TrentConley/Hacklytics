@@ -3,13 +3,14 @@
 import Head from "next/head";
 import Header from "../components/header";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="bg-black text-white min-h-screen">
       <Header />
 
-      <main className="px-4 py-16 mx-auto max-w-7xl">
+      <main className="px-4 py-12 mx-auto max-w-7xl">
         <section className="flex justify-between items-center">
           <div>
             <h1 className="text-5xl font-bold leading-tighter montserrat">
@@ -22,7 +23,7 @@ export default function Home() {
               powerful image classification.
             </p>
           </div>
-          <div className="pt-10">
+          <div className="">
             <Image
               src="/aiface.png"
               alt="Model Image"
@@ -33,7 +34,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="services-container flex justify-between">
+        <div className="services-container flex justify-between mt-16 py-16">
           <div className="service-item text-center">
             <div className="image-container mx-auto rounded-full overflow-hidden w-24 h-24 bg-gray-300">
               <img
@@ -65,7 +66,7 @@ export default function Home() {
           <div className="service-item text-center">
             <div className="image-container mx-auto rounded-full overflow-hidden w-24 h-24 bg-gray-300">
               <img
-                src="/public/ai.png"
+                src="/dataset.png"
                 alt="Dataset Expansion"
                 className="w-full h-full"
               />
@@ -79,7 +80,7 @@ export default function Home() {
           <div className="service-item text-center">
             <div className="image-container mx-auto rounded-full overflow-hidden w-24 h-24 bg-gray-300">
               <img
-                src="/public/ai.png"
+                src="/model.png"
                 alt="Diverse Models"
                 className="w-full h-full"
               />
@@ -139,9 +140,11 @@ export default function Home() {
         </section>
 
         <section className="mt-10 flex justify-center">
-          <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg">
-            Get Started
-          </button>
+          <Link href="/train">
+            <a className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg">
+              Get Started
+            </a>
+          </Link>
         </section>
       </main>
 
