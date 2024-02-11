@@ -207,56 +207,6 @@ const Home: NextPage = () => {
             </label>
           </div>
         </div>
-        <div className="flex justify-center">
-          <h2>Settings:   </h2>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="CNN"
-                checked={settings.modelType == 'CNN'}
-                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
-              />
-              CNN (Speed)
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="VIT"
-                checked={settings.modelType == 'VIT'}
-                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
-              />
-              VIT (Accuracy)
-            </label>
-          </div>
-        </div>
-        <div className="flex justify-center">
-          <h2>Settings:   </h2>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="CNN"
-                checked={settings.modelType == 'CNN'}
-                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
-              />
-              CNN (Speed)
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="modelType"
-                value="VIT"
-                checked={settings.modelType == 'VIT'}
-                onChange={(e) => setSettings({...settings, modelType: e.target.value})}
-              />
-              VIT (Accuracy)
-            </label>
-          </div>
-        </div>
         <div className="flex justify-center mt-10">
           <input
             type="text"
