@@ -57,13 +57,13 @@ const ImageUploaderWrapper = ({
   const storageRef = ref(storage, new Date().toISOString());
 
   const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    uploadImage({ imageFile: file });
+    acceptedFiles.forEach((file: File) => {
+      uploadImage({ imageFile: file });
+    });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: "image/*",
-    maxFiles: 1,
     noClick: true,
     noKeyboard: true,
     onDrop,
@@ -72,6 +72,7 @@ const ImageUploaderWrapper = ({
   const uploadImage = async ({ imageFile }: Image) => {
     try {
       setLoading(true);
+      const storageRef = ref(storage, new Date().toISOString());
       const uploadTask = uploadBytesResumable(storageRef, imageFile);
       uploadTask.on(
         "state_changed",
@@ -133,7 +134,7 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify(imageData));
-      const response = await fetch("YOUR_SERVER_URL", {
+      const response = await fetch("http://18.188.69.104:8080/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
