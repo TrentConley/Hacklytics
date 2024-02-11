@@ -28,6 +28,7 @@ const Classifier: FC = () => {
   const [selectedButton, setSelectedButton] = useState<number | undefined>(
     undefined
   );
+  const [currentState, setCurrentState] = useState<String>("Undefined");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -82,16 +83,22 @@ const Classifier: FC = () => {
   useEffect(() => {
     const fetchButtonNames = async () => {
       try {
-        const response = await axios.get(
-          "https://3deb-2610-148-205b-0-7004-5839-c13d-e1c7.ngrok-free.app/getModels"
+        console.log("trying");
+        const response = await fetch(
+          `https://3deb-2610-148-205b-0-7004-5839-c13d-e1c7.ngrok-free.app/getModels`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          }
         );
-        const modelID = (response.data as Array<Array<any>>).map(
-          (item) => item[0]
-        );
+        const data = await response.json();
+        console.log(data);
+        const modelID = data.map((item: any[]) => item[0]);
 
-        const buttonNames = (response.data as Array<Array<any>>).map(
-          (item) => item[1]
-        );
+        const buttonNames = data.map((item: any[]) => item[1]);
 
         const newButtonModelMap: { [key: string]: any } = {};
         for (let i = 0; i < buttonNames.length; i++) {
@@ -101,11 +108,7 @@ const Classifier: FC = () => {
         setButtonModelMap(newButtonModelMap);
 
         setButtonNames(buttonNames);
-
-        console.log(response.data[0][1]);
         // setButtonNames(response.data);
-        console.log(`got names`);
-        console.log(response);
       } catch (error) {
         console.error("Failed to fetch button names:", error);
       }
@@ -131,7 +134,10 @@ const Classifier: FC = () => {
         }),
       }
     );
+    console.log(`got names`);
     console.log(response);
+    const responseBody = await response.text();
+    setCurrentState(responseBody);
   };
 
   return (
@@ -184,22 +190,29 @@ const Classifier: FC = () => {
             />
           </div>
         )}
-        <button
-          onClick={submitImage}
-          style={{
-            background: "black",
-            color: "gold",
-            border: "1px solid",
-            backgroundImage: "linear-gradient(to right, gold, black)",
-            padding: "10px 20px",
-            fontSize: "1em",
-            borderRadius: "5px",
-            cursor: "pointer",
-            marginTop: "1em",
-          }}
-        >
-          Submit Image
-        </button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button
+            onClick={submitImage}
+            style={{
+              background: "black",
+              color: "gold",
+              border: "1px solid",
+              backgroundImage: "linear-gradient(to right, gold, black)",
+              padding: "10px 20px",
+              fontSize: "1em",
+              borderRadius: "5px",
+              cursor: "pointer",
+              marginTop: "1em",
+              marginRight: "1em", // Add some space between the button and the text
+            }}
+          >
+            Submit Image
+          </button>
+          <div>
+            <div />
+            <h2 className="text-white">Current State: {currentState}</h2>
+          </div>
+        </div>
       </div>
     </div>
   );
