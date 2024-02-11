@@ -23,8 +23,8 @@ def debug():
 def upload(modelName):
     print('recieved input')
     modelID = str(uuid.uuid1())
+    data = request.json()
     models[modelID] = [modelName, 0]
-    data = request.json
     modelQueue.append({"id": modelID, "data":data})
     return "", 201
 
@@ -36,7 +36,7 @@ def checkModels():
 
 @app.route("/finishModel", methods=["POST"])
 def finishModels():
-    data = request.json
+    data = request.json()
     if (data["id"] == "refused"):
         return "", 400
     if (data["id"] in models):
@@ -54,7 +54,7 @@ def getModels():
 def classify():
     jobID = str(uuid.uuid1())
     jobs[jobID] = 0
-    data = request.json
+    data = request.json()
     jobQueue.append({"id": jobID, "data":data})
     while (jobs[jobID] == 0):
       time.sleep(0.1)
@@ -68,7 +68,7 @@ def checkJobs():
 
 @app.route("/finishJob", methods=["POST"])
 def finishJob():
-    data = request.json
+    data = request.json()
     if (data["id"] in jobs):
         models[data["id"]] = data
         return "", 202
@@ -76,5 +76,4 @@ def finishJob():
         return "", 400
 
 if __name__ == '__main__':
-    
     app.run(host= '0.0.0.0',debug=True)
