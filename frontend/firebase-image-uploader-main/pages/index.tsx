@@ -134,14 +134,14 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify(imageData));
-      const response = await fetch("http://18.188.69.104:8080/upload/1", {
+      const response = await fetch("http://18.188.69.104:5000/upload/a", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(imageData),
       });
-
+      console.log(response);
       if (!response.ok) {
         throw new Error("HTTP error " + response.status);
       }
