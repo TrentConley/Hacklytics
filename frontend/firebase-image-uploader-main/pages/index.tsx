@@ -135,13 +135,16 @@ const Home: NextPage = () => {
     try {
       console.log("foobar");
       console.log(JSON.stringify(imageData));
-      const response = await fetch(`http://18.188.69.104:8080/upload/${modelName}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(imageData),
-      });
+      const response = await fetch(
+        `http://18.188.69.104:5000/upload/${modelName}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(imageData),
+        }
+      );
       console.log(response);
       if (!response.ok) {
         throw new Error("HTTP error " + response.status);
@@ -163,11 +166,13 @@ const Home: NextPage = () => {
           <title>Image Uploader</title>
         </Head>
         <div className="flex justify-center mt-10">
-          <input type="text"
+          <input
+            type="text"
             value={modelName}
             onChange={(e) => setModelName(e.target.value)}
             placeholder="Enter model name"
-            className="border-2 border-gray-300 rounded-md p-2 mr-2" />
+            className="border-2 border-gray-300 rounded-md p-2 mr-2"
+          />
         </div>
         <div className="flex justify-center mt-10">
           <input
