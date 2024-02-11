@@ -82,7 +82,9 @@ const Classifier: FC = () => {
   useEffect(() => {
     const fetchButtonNames = async () => {
       try {
-        const response = await axios.get("http://18.188.69.104:5000/getModels");
+        const response = await axios.get(
+          "https://3deb-2610-148-205b-0-7004-5839-c13d-e1c7.ngrok-free.app/getModels"
+        );
         const modelID = (response.data as Array<Array<any>>).map(
           (item) => item[0]
         );
@@ -116,16 +118,19 @@ const Classifier: FC = () => {
     const model =
       buttonModelMap[buttonNames[selectedButton ? selectedButton : 0]];
     console.log(model);
-    const response = await fetch(`http://18.188.69.104:5000/classify`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        imageUrl,
-        model,
-      }),
-    });
+    const response = await fetch(
+      `https://3deb-2610-148-205b-0-7004-5839-c13d-e1c7.ngrok-free.app/classify`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          imageUrl,
+          model,
+        }),
+      }
+    );
     console.log(response);
   };
 

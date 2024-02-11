@@ -143,7 +143,7 @@ const Home: NextPage = () => {
       console.log("foobar");
       console.log(JSON.stringify({ imageData, settings }));
       const response = await fetch(
-        `http://18.188.69.104:5000/upload/${modelName}`,
+        `https://3deb-2610-148-205b-0-7004-5839-c13d-e1c7.ngrok-free.app/upload/${modelName}`,
         {
           method: "POST",
           headers: {
