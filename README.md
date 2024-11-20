@@ -14,22 +14,22 @@ Easy Deep Learning excels in scenarios where users lack extensive deep learning 
 
 ## Technologies Used
 
-Stable Diffusion
-MKL
-VGG-16
-Google Vision Transformer
-Intel Developer Cloud
-Firebase
-Flask
-Next.js
-AWS
+- Stable Diffusion
+- MKL
+- VGG-16
+- Google Vision Transformer
+- Intel Developer Cloud
+- Firebase
+- Flask
+- Next.js
+- AWS
 
 ## Team Members
 
-Ankit Agrawal
-Bryce Pardo
-Pranav Devarinti
-Trent Conley
+- Ankit Agrawal
+- Bryce Pardo
+- Pranav Devarinti
+- Trent Conley
 
 ## Acknowledgements
 
